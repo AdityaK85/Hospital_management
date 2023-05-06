@@ -1,0 +1,667 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+  <meta name="author" content="AdminKit">
+  <meta name="keywords"
+    content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="shortcut icon" href="{% static 'img/icons/icon-48x48.png' %} " />
+
+  <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+  <title>Hospital Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+    integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css"
+    href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" />
+  <link rel="stylesheet" type="text/css"
+    href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" />
+  <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}"
+    rel="stylesheet" type="text/css" />
+  <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/libs/select2/css/select2.min.css' %}" />
+
+
+  <link href="{% static 'css/app.css' %} " rel="stylesheet">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}"
+    rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css"
+    href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" />
+  <link rel="stylesheet" type="text/css"
+    href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+    integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <nav id="sidebar" class="sidebar js-sidebar">
+      <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+          <span class="align-middle" style="font-size: x-large;">Hospital</span>
+        </a>
+
+        <ul class="sidebar-nav">
+          <li class="sidebar-header">
+            Admin
+          </li>
+
+          <li class="sidebar-item active">
+            <a class="sidebar-link" href="/dashboard">
+              <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/department">
+              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Department</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/doctor">
+              <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Doctor</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/patient">
+              <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Patient</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/appointment">
+              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Appointment</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/schedule">
+              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Schedule</span>
+            </a>
+          </li>
+
+          <li class="sidebar-header">
+            Manage Details
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/manage_department">
+              <i class="align-middle" data-feather="square"></i> <span class="align-middle">Manage Department</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/manage_doctor">
+              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Manage Doctors</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/manage_patients">
+              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Manage Patients</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/display_appointment">
+              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Display Appointment</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="/display_schedule">
+              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Display Schedule</span>
+            </a>
+          </li>
+
+
+      </div>
+    </nav>
+
+    <div class="main">
+      <nav class="navbar navbar-expand navbar-light navbar-bg">
+        <a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+        <div class="navbar-collapse collapse">
+          <ul class="navbar-nav navbar-align">
+
+            <li class="nav-item dropdown">
+              <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+
+              <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                <img src="{% static 'img/avatars/avatar.jpg' %} " class="avatar img-fluid rounded me-1"
+                  alt="Charles Hall" /> <span class="text-dark">{{request.user.username}}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" > Are you Sure to Logout</a>
+
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item " href="/logout_page"><i class="align-middle me-1" data-feather="user"></i> Log out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- ################################# Appointment ##################### -->
+
+      <div class="modal fade" id="profilemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" onclick="close_modal()">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+
+                <div class="form-group col-6">
+                  <label for="recipient-name" class="col-form-label">Patient Name</label>
+                  <input type="text" class="form-control" id="patient_name">
+                  <center>
+                    <span id="name_error" style="color: red;display: none;">Invalid Name</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="message-text" class="col-form-label">Department</label>
+                  <select name="department" id="fk_department" class="form-control" id="">
+                    <option selected class="form-control">--select--</option>
+                    {% for i in obj1 %}
+                    <option value="{{i.id}}" class="form-control">{{i.department}}</option>
+                    {% endfor %}
+                  </select>
+                  <center>
+                    <span id="email_error" style="color: red;display: none;">Invalid Email</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="contact_person" class="col-form-label">Doctor</label>
+                  <select name="" id="fk_doctor" class="form-control" id="">
+                    <option selected class="form-control">--select--</option>
+                    {% for i in obj2 %}
+                    <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+                    {% endfor %}
+                  </select>
+                  <center>
+                    <span id="contact_person_error" style="color: red;display: none;">Contact person</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="contact_number" class="col-form-label">Appointment_date</label>
+                  <input type="date" class="form-control" id="appointment_date"></input>
+                  <center>
+                    <span id="contact_number_error" style="color: red;display: none;">Invalid Contact Number </span>
+                  </center>
+                </div>
+
+                <div class="form-group">
+                  <label for="address" class="col-form-label">Problem</label>
+                  <textarea type="text" class="form-control" placeholder="Write Patient Problem here !"
+                    id="problem"></textarea>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+
+
+                <!-- <input type="hidden" value="{{logged_id.id}}" id="prof_user_id"> -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" onclick="close_modal()">Close</button> -->
+              <button type="button" class="btn btn-primary" onclick="save_appointment_model()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ################################# Department ##################### -->
+
+      <div class="modal fade" id="departmentmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" onclick="close_modal()">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+
+                <div class="form-group col-6">
+                  <label for="recipient-name" class="col-form-label">Select Department</label>
+                  <select name="department" id="department" class="form-control" id="">
+                    <option selected class="form-control">--select--</option>
+                    {% for i in obj1 %}
+                    <option value="{{i.department}}" class="form-control">{{i.department}}</option>
+                    {% endfor %}
+                  </select>
+                  <center>
+                    <span id="name_error" style="color: red;display: none;">Invalid Name</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="message-text" class="col-form-label">Status</label>
+                  <select name="status" id="status" class="form-control" id="">
+                    <option value="Active" class="form-control">Active</option>
+                    <option value="Active" class="form-control">Inactive</option>
+                    <option value="Active" class="form-control">None</option>
+                  </select>
+                  <center>
+                    <span id="email_error" style="color: red;display: none;">Invalid Email</span>
+                  </center>
+                </div>
+
+                <div class="form-group">
+                  <label for="address" class="col-form-label">Discription</label>
+                  <textarea type="text" class="form-control" id="discription" placeholder="Discription"></textarea>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+
+
+                <!-- <input type="hidden" value="{{logged_id.id}}" id="prof_user_id"> -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" onclick="close_modal()">Close</button> -->
+              <button type="button" class="btn btn-primary" onclick="save_department_model()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ################################# doctor ##################### -->
+
+      <div class="modal fade" id="doctormodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" onclick="close_modal()">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Doctor Name</label>
+                  <input type="text" class="form-control" id="dr_name" placeholder="Enter Your Name">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="recipient-name" class="col-form-label">Status</label>
+                  <select name="dr_gender" class="form-control" id="dr_gender">
+                    <option value="male">Male</option>
+                    <option value="male">Female</option>
+                    <option value="male">Other</option>
+                  </select>
+                  <center>
+                    <span id="name_error" style="color: red;display: none;">Invalid Name</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="message-text" class="col-form-label">Email</label>
+                  <input type="email" class="form-control" id="dr_email" placeholder="Enter Your Email ">
+                  <center>
+                    <span id="email_error" style="color: red;display: none;">Invalid Email</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Age</label>
+                  <input type="number" class="form-control" id="dr_age" placeholder="Enter Your Age ">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-12">
+                  <label for="address" class="col-form-label">Address</label>
+                  <textarea type="email" class="form-control" cols="1" rows="2" id="dr_addr"
+                    placeholder="Enter Your Address "></textarea>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-12">
+                  <label for="address" class="col-form-label">Experience</label>
+                  <select name="dr_exprience" class="form-control" id="dr_exprience">
+                    <option value="1yr">1yr</option>
+                    <option value="2yr">2yr</option>
+                    <option value="3yr">3yr</option>
+                    <option value="4yr">4yr</option>
+                    <option value="5yr">5yr</option>
+                    <option value="6yr">6yr</option>
+                    <option value="7yr">7yr</option>
+                    <option value="8yr">8yr</option>
+                    <option value="9yr">9yr</option>
+                    <option value="10yr">10yr</option>
+                  </select>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Mobile</label>
+                  <input type="number" class="form-control" id="dr_mobile" placeholder="Enter Your Mobile ">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Department</label>
+                  <select name="" class="form-control" id="dr_depart">
+                    {% for i in obj1 %}
+                    <option value="{{i.department}}" class="form-control">{{i.department}}</option>
+                    {% endfor %}
+                  </select>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+
+
+                <!-- <input type="hidden" value="{{logged_id.id}}" id="prof_user_id"> -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" onclick="close_modal()">Close</button> -->
+              <button type="button" class="btn btn-primary" onclick="save_doctor_model()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ################################# patient ##################### -->
+
+      <div class="modal fade" id="patientmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" onclick="close_modal()">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+
+
+
+                <div class="form-group col-6">
+                  <label for="recipient-name" class="col-form-label">Doctor Name</label>
+                  <select name="fk_dr" class="form-control" id="fk_dr">
+                    <option class="form-control">--select--</option>
+                    {% for i in obj1 %}
+                    <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+                    {% endfor %}
+                  </select>
+                  <center>
+                    <span id="name_error" style="color: red;display: none;">Invalid Name</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Patient Name</label>
+                  <input type="text" class="form-control" name="patient_name" id="patient_name_m">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="message-text" class="col-form-label">Email</label>
+                  <input type="email" class="form-control" name="" id="patient_email">
+                  <center>
+                    <span id="email_error" style="color: red;display: none;">Invalid Email</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Mobile</label>
+                  <input type="number" class="form-control" name="" id="patient_phone">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Age</label>
+                  <input type="number" class="form-control" name="" id="patient_age">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Gender</label>
+                  <select name="" class="form-control" id="patient_gender">
+                    <option value="male">Male</option>
+                    <option value="male">Female</option>
+                    <option value="male">Other</option>
+                  </select>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Blood Group</label>
+                  <select name="" class="form-control" id="patient_blood">
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                  </select>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Address</label>
+                  <textarea type="number" class="form-control" rows="1" placeholder="Address" name=""
+                    id="patient_addr"></textarea>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+
+
+                <!-- <input type="hidden" value="{{logged_id.id}}" id="prof_user_id"> -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" onclick="close_modal()">Close</button> -->
+              <button type="button" class="btn btn-primary" onclick="save_patient_model()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <!-- ################################# schedule ##################### -->
+
+      <div class="modal fade" id="schedulemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" onclick="close_modal()">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+
+
+
+                <div class="form-group col-6">
+                  <label for="recipient-name" class="col-form-label">Doctor Name</label>
+                  <select name="fk_dr" class="form-control" id="fk_doctor_s">
+                    <option class="form-control">--select--</option>
+                    {% for i in obj2 %}
+                    <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+                    {% endfor %}
+                  </select>
+                  <center>
+                    <span id="name_error" style="color: red;display: none;">Invalid Name</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="recipient-name" class="col-form-label">Department</label>
+                  <select name="fk_dr" class="form-control" id="fk_department_s">
+                    <option class="form-control">--select--</option>
+                    {% for i in obj1 %}
+                    <option value="{{i.id}}" class="form-control">{{i.department}}</option>
+                    {% endfor %}
+                  </select>
+                  <center>
+                    <span id="name_error" style="color: red;display: none;">Invalid Name</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Available Days</label>
+                  <input type="number" placeholder="ex. 15" class="form-control" name="patient_name" id="available_days">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="message-text" class="col-form-label">Available Time</label>
+                  <input type="text" class="form-control" name="" placeholder="min, hr, sec" id="available_time">
+                  <center>
+                    <span id="email_error" style="color: red;display: none;">Invalid Email</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">End Time</label>
+                  <input type="text" class="form-control" placeholder="min, hr, sec" name="" id="end_time">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Per Patient Time</label>
+                  <input type="text" class="form-control" name="" placeholder="min, hr, day" id="per_patient_time">
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="address" class="col-form-label">Status</label>
+                  <select name="" class="form-control" id="status">
+                    <option value="male">Active</option>
+                    <option value="male">Inactive</option>
+                  </select>
+                  <center>
+                    <span id="address_error" style="color: red;display: none;">Invalid Address</span>
+                  </center>
+                </div>
+
+                
+
+
+
+                <!-- <input type="hidden" value="{{logged_id.id}}" id="prof_user_id"> -->
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" onclick="close_modal()">Close</button> -->
+              <button type="button" class="btn btn-primary" onclick="save_schedule_model()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+
+
+      <script>
+        function new_appointment_modal() {
+          $("#profilemodal").modal('show')
+        }
+
+        function new_department_modal() {
+          $("#departmentmodal").modal('show')
+        }
+
+        function new_doctor_modal() {
+          $("#doctormodal").modal('show')
+        }
+
+        function new_patient_modal() {
+          $("#patientmodal").modal('show')
+        }
+
+        function new_schedule_modal() {
+          $("#schedulemodal").modal('show')
+        }
+        
+
+
+        
+        
+      </script>

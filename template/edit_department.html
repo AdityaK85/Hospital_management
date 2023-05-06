@@ -1,0 +1,148 @@
+{% include 'header.html' %} {% load static %}
+
+<main class="content">
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <div class="col-12">
+            <div class="row">
+                <div class="page-title-end col">
+                    <ol class="breadcrumb">
+                        <h2 class="fw-semibold display-8 mb-0">Department</h2>
+                    </ol>
+                </div>
+            </div>
+          </div>                                    
+        </div>
+    </div>
+</div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Active Department</h4>
+
+      <form  >
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-3 col-form-label"
+            >Department</label
+          >
+          <input type="hidden" name="" id="id" value="{{id.id}}">
+          <div class="col-sm-9">
+            <select  name="department" id="department_d" class="form-control" >
+              <option value="{{id.department_name}}" class="form-control">{{id.department_name}}</option>
+              {% for i in obj1 %}
+              <option value="{{i.department}}" class="form-control">{{i.department}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="horizontal-email-input" class="col-sm-3 col-form-label"
+            >Discription</label
+          >
+          <div class="col-sm-9">
+            <textarea
+              type="text"
+              class="form-control"
+              value="{{id.discriptions}}"
+              id="discription_d"
+              name="discription"
+              placeholder="Discription"
+            >{{id.discriptions}}</textarea>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label for="horizontal-password-input" class="col-sm-3 col-form-label"
+            >Status</label
+          >
+          <div class="col-sm-9">
+            <select name="status" id="status_d" class="form-control" >
+              <option value="{{id.status}}" class="form-control">{{id.status}}</option>
+              <option value="Active" class="form-control">Active</option>
+              <option value="Active" class="form-control">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row justify-content-end">
+          <div class="col-sm-9">
+            <div>
+              <button type="button" onclick="update_department()"  class="btn btn-success w-md">Update Department</button>
+            </div>
+          </div>
+        </div>  
+      </form>
+    </div>
+    <!-- end card body -->
+  </div>
+</main>
+
+<script>
+  function update_department() {
+    var id = $('#id').val()
+    var department = $("#department_d").val();
+    var discription = $("#discription_d").val();
+    var status = $("#status_d").val();
+
+    if (department == "") {
+      $("#employee_id_error").show();
+    }	
+    else if (discription == "") {
+      $("#employee_name_error").show();
+    } 
+    else if (status == "") {
+      $("#email_error").show();
+    } 
+    
+     
+    else{
+        $.ajax({
+            method:"POST",
+            url: "/upader_department/",
+            data : {
+                id,
+                department,
+                discription,
+                status
+            },
+            success:function (response){
+                if (response == "success"){
+                    swal("Department Updated", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function(){
+                  location.href = '/manage_department'
+                })
+                }else{
+                    swal("Try again Later", {
+                    icon: "warning",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                    })
+                }
+            }   
+        })
+    }
+  }
+
+  function remove_employee_name() {
+    $("#employee_name_error").hide();
+  }
+  function remove_number() {
+    $("#contact_number_error").hide();
+  }
+  function remove_employee_id() {
+    $("#employee_id_error").hide();
+  }
+  function remove_address() {
+    $("#address_error").hide();
+  }
+  function remove_email() {
+    $("#email_error").hide();
+  }
+</script>
+
+
+{% include 'footer.html' %}

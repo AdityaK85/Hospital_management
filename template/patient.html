@@ -1,0 +1,222 @@
+{% include 'header.html' %} {% load static %}
+
+<main class="content">
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <div class="col-12">
+            <div class="row">
+                <div class="page-title-end col">
+                    <ol class="breadcrumb">
+                        <h2 class="fw-semibold display-8 mb-0">Patient</h2>
+                    </ol>
+                </div>
+            </div>
+          </div>                                    
+        </div>
+    </div>
+</div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Patient</h4>
+        
+      <form class="">
+        <div class="row mb-4 justify-content-center">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Doctor</label
+          >
+          <div class="col-sm-6">
+            <select name="fk_dr" class="form-control" id="fk_dr_b">
+              <option class="form-control">--select--</option>
+              {% for i in obj %}
+              <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        
+        <div class="row mb-4 justify-content-center">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Patient Name</label
+          >
+          <div class="col-sm-6">
+            <input type="text" class="form-control" name="patient_name" id="patient_name_b">
+          </div>
+        </div>
+        
+        <div class="row mb-4 justify-content-center">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Email</label
+          >
+          <div class="col-sm-6">
+            <input type="email" class="form-control" name="" id="patient_email_b">
+          </div>
+        </div>
+        
+        <div class="row mb-4 justify-content-center">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Phone</label
+          >
+          <div class="col-sm-6">
+            <input type="number" class="form-control" name="" id="patient_phone_b">
+          </div>
+        </div>
+        
+        <div class="row mb-4 justify-content-center">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Age</label
+          >
+          <div class="col-sm-6">
+            <input type="number" class="form-control" name="" id="patient_age_b">
+          </div>
+        </div>
+        
+        <div class="row mb-4 justify-content-center">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Gender</label
+          >
+          <div class="col-sm-2">
+            <select name="" class="form-control" id="patient_gender_b">
+              <option value="male">Male</option>
+              <option value="male">Female</option>
+              <option value="male">Other</option>
+          </select>
+          </div>
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Blood Group</label
+          >
+          <div class="col-sm-2">
+            <select name="" class="form-control" id="patient_blood_b">
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+          </select>
+        </div>
+        
+        
+        
+        <div class="row mb-4 my-4 justify-content-center mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Address</label
+          >
+          <div class="col-sm-6">
+            <textarea type="number" class="form-control" placeholder="Address" name="" id="patient_addr_b"></textarea>
+          </div>
+        </div>
+        
+
+        <div class="row justify-content-end">
+          <div class="col-sm-6">
+            <div>
+              <button type="button" onclick="save_patient()" class="btn btn-success w-md">Add Department</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- end card body -->
+  </div>
+</main>
+
+<script>
+  function save_patient() {
+      var fk_dr = $("#fk_dr_b").val();
+      var patient_name = $("#patient_name_b").val();
+      var patient_email = $("#patient_email_b").val();
+      var patient_phone = $("#patient_phone_b").val();
+      var patient_age = $("#patient_age_b").val();
+      var patient_gender = $("#patient_gender_b").val();
+      var patient_blood = $("#patient_blood_b").val();
+      var patient_addr = $("#patient_addr_b").val();
+
+      console.log(fk_dr)
+      console.log(patient_name)
+      console.log(patient_email)
+      console.log(patient_phone)
+      console.log(patient_age)
+      console.log(patient_blood)
+      console.log(patient_addr)
+  
+      if (patient_name == "") {
+        $("#employee_id_error").show();
+      }	
+      else if (patient_email == "") {
+        $("#employee_name_error").show();
+      } 
+      else if (patient_phone == "") {
+        $("#email_error").show();
+      } 
+      else if (patient_age == "") {
+        $("#email_error").show();
+      } 
+      else if (patient_gender == "") {
+        $("#email_error").show();
+      } 
+      else if (patient_blood == "") {
+        $("#email_error").show();
+      } 
+      else if (patient_addr == "") {
+        $("#email_error").show();
+      }  
+      else{
+          $.ajax({
+              method:"POST",
+              url: "/save_patient/",
+              data : {
+                  fk_dr,
+                  patient_name,
+                  patient_email,
+                  patient_phone,
+                  patient_age,
+                  patient_gender,
+                  patient_blood,
+                  patient_addr,
+              },
+              success:function (response){
+                  if (response == "success"){
+                      swal("Patient has been Added", {
+                      icon: "success",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                  })
+                  $('#form_data').reset()
+                  }else{
+                      swal("Try again Later", {
+                      icon: "warning",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                      })
+                  department.val()
+                  discription.val()
+                  status.val()
+                  }
+              }   
+          })
+      }
+    }
+  
+  </script>
+
+{% include 'footer.html' %}
+

@@ -1,0 +1,165 @@
+{% include 'header.html' %} {% load static %}
+
+<main class="content">
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <div class="col-12">
+            <div class="row">
+                <div class="page-title-end col">
+                    <ol class="breadcrumb">
+                        <h2 class="fw-semibold display-8 mb-0">Appointment</h2>
+                    </ol>
+                </div>
+            </div>
+          </div>                                    
+        </div>
+    </div>
+</div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Active Department</h4>
+
+      <form>
+
+        <div class="row mb-4">
+            <label for="horizontal-firstname-input" class="col-sm-2 col-form-label">Patient Name</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" id="patient_name_a" placeholder="Enter Your Patient Name ">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Department</label
+          >
+          <div class="col-sm-5">
+            <select name="" class="form-control" id="fk_department_a">
+              {% for i in obj1 %}
+              <option value="{{i.id}}" class="form-control">{{i.department}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Doctor</label
+          >
+          <div class="col-sm-5">
+            <select name="" class="form-control" id="fk_doctor_a">
+              {% for i in obj %}
+              <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="appointment_date" class="col-sm-2 col-form-label"
+            >Appointment date</label
+          >
+          <div class="col-sm-5">
+            <input
+              type="date"
+              class="form-control"
+              id="appointment_date_a"
+              placeholder="Discription"
+            ></input>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="horizontal-password-input" class="col-sm-2 col-form-label"
+            >Problems</label
+          >
+          <div class="col-sm-5">
+            <textarea name="problem" id="problem_a" class="form-control" placeholder="Write Patient Problems here !" id="" cols="30" rows="2"></textarea>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-sm-2">
+            <div>
+              <button type="button" onclick="save_appointment()" class="btn btn-success w-md">Register Appointment</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- end card body -->
+  </div>
+</main>
+
+
+<script>
+
+  function save_appointment() {
+      var patient_name = $("#patient_name_a").val();
+      var fk_doctor = $("#fk_doctor_a").val();
+      var fk_department = $("#fk_department_a").val();
+      var appointment_date = $("#appointment_date_a").val();
+      var problem = $("#problem_a").val();
+
+      console.log('department',fk_doctor)
+      console.log('department',fk_department)
+      console.log(patient_name)
+      console.log(appointment_date)
+      console.log(problem)
+  
+      if (patient_name == "") {
+        $("#employee_id_error").show();
+      }	
+      else if (fk_department == "") {
+        $("#employee_name_error").show();
+      } 
+      else if (fk_doctor == "") {
+        $("#email_error").show();
+      } 
+      else if (appointment_date == "") {
+        $("#email_error").show();
+      } 
+      else if (problem == "") {
+        $("#email_error").show();
+      } 
+      else{
+          $.ajax({
+              method:"POST",
+              url: "/save_appointment/",
+              data : {
+                  patient_name,
+                  fk_department,
+                  fk_doctor,
+                  appointment_date,
+                  problem,
+              },
+              success:function (response){
+                  if (response == "success"){
+                      swal("Appoint  Added", {
+                      icon: "success",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                  })
+                  $('#form_data').reset()
+                  }else{
+                      swal("Try again Later", {
+                      icon: "warning",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                      })
+                  department.val()
+                  discription.val()
+                  status.val()
+                  }
+              }   
+          })
+      }
+    }
+  
+  </script>
+
+{% include 'footer.html' %}

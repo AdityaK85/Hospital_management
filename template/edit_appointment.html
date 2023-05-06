@@ -1,0 +1,163 @@
+{% include 'header.html' %} {% load static %}
+
+<main class="content">
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <div class="col-12">
+            <div class="row">
+                <div class="page-title-end col">
+                    <ol class="breadcrumb">
+                        <h2 class="fw-semibold display-8 mb-0">Appointment</h2>
+                    </ol>
+                </div>
+            </div>
+          </div>                                    
+        </div>
+    </div>
+</div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Active Department</h4>
+
+      <form>
+        <input type="hidden" id="id" value="{{id.id}}">
+        <div class="row mb-4">
+            <label for="horizontal-firstname-input" class="col-sm-2 col-form-label">Patient Name</label>
+            <div class="col-sm-5">
+              <input type="text" value="{{id.patient_name}}" class="form-control" id="patient_name_d" placeholder="Enter Your Patient Name ">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Department</label
+          >
+          <div class="col-sm-5">
+            <select name="" class="form-control" id="fk_department_d">
+                <option value="{{id.fk_department_id.department_id}}" class="form-control">{{id.fk_department.department}}</option>
+              {% for i in obj1 %}
+              <option value="{{i.id}}" class="form-control">{{i.department}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Doctor</label
+          >
+          <div class="col-sm-5">
+            <select name="" class="form-control" id="fk_doctor_d">
+                <option value="{{id.fk_doctor_id}}" class="form-control">{{id.fk_doctor.dr_name}}</option>
+              {% for i in obj %}
+              <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="appointment_date" class="col-sm-2 col-form-label"
+            >Appointment date</label
+          >
+          <div class="col-sm-5">
+            <input
+              type="date"
+              class="form-control"
+              id="appointment_date_d"
+              value="{{id.appointment_date|date:'Y-m-d'}}"
+              placeholder="Discription"
+            ></input>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="horizontal-password-input" class="col-sm-2 col-form-label"
+            >Problems</label
+          >
+          <div class="col-sm-5">
+            <textarea name="problem" id="problem_d" value="{{id.problem}}" class="form-control" placeholder="Write Patient Problems here !" id="" cols="30" rows="2">{{id.problem}}</textarea>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-sm-2">
+            <div>
+              <button type="button" onclick="update_appointment()" class="btn btn-success w-md">Register Appointment</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- end card body -->
+  </div>
+</main>
+
+
+<script>
+
+  function update_appointment() {
+      var id =  $('#id').val()
+      var patient_name = $("#patient_name_d").val();
+      var fk_doctor = $("#fk_doctor_d").val();
+      var fk_department = $("#fk_department_d").val();
+      var appointment_date = $("#appointment_date_d").val();
+      var problem = $("#problem_d").val();
+  
+      if (patient_name == "") {
+        $("#employee_id_error").show();
+      }	
+      else if (fk_department == "") {
+        $("#employee_name_error").show();
+      } 
+      else if (fk_doctor == "") {
+        $("#email_error").show();
+      } 
+      else if (appointment_date == "") {
+        $("#email_error").show();
+      } 
+      else if (problem == "") {
+        $("#email_error").show();
+      } 
+      else{
+          $.ajax({
+              method:"POST",
+              url: "/update_appointment/",
+              data : {
+                    id,
+                  patient_name,
+                  fk_department,
+                  fk_doctor,
+                  appointment_date,
+                  problem,
+              },
+              success:function (response){
+                  if (response == "success"){
+                      swal("Appointment Updated", {
+                      icon: "success",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                  }).then(function(){
+                    location.href = "/display_appointment"
+                  })
+                  }else{
+                      swal("Try again Later", {
+                      icon: "warning",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                      })
+                 
+                  }
+              }   
+          })
+      }
+    }
+  
+  </script>
+
+{% include 'footer.html' %}

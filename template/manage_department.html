@@ -1,0 +1,202 @@
+{% load static %} {% include 'header.html' %}
+<main class="content">
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+          <div class="col-12">
+            <div
+              class="page-title-box d-sm-flex align-items-center justify-content-between"
+            >
+              <div class="col-12">
+                <div class="row">
+                  <div class="page-title-end col">
+                    <ol class="breadcrumb">
+                      <h2 class="fw-semibold display-6 mb-0">
+                        Manage Department
+                      </h2>
+                    </ol>
+                  </div>
+                  <div class="col-2">
+                    <button
+                      type="button"
+                      onclick="new_department_modal()"
+                      class="btn btn-primary"
+                    >
+                      New Department<i class="bx bx-import"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <table
+                  id="datatable"
+                  class="table table-bordered dt-responsive nowrap w-100"
+                >
+                  <thead>
+                    <tr>
+                      <th>Sr.no</th>
+                      <th>Department Name</th>
+                      <th>Descriptions</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in obj %}
+                    <tr>
+                      <td>0{{forloop.counter}}</td>
+                      <td>{{i.department_name }}</td>
+                      <td>{{i.discriptions }}</td>
+                      <td>{{i.status }}</td>
+
+                      <td>
+                        <a
+                          class="btn btn-icon icon-left btn-primary btn-sm"
+                          style="
+                            background-color: transparent;
+                            outline: none;
+                            background-repeat: no-repeat;
+                            border: none;
+                            overflow: hidden;
+
+                          "
+                          href="/edit_department/{{i.id}}"
+                          ><i class="fas fa-edit" style="color: black"></i
+                        ></a>
+                        <a
+                          class="btn btn-icon icon-left btn-danger btn-sm"
+                          style="
+                            background-color: transparent;
+                            outline: none;
+                            background-repeat: no-repeat;
+                            border: none;
+                            overflow: hidden;
+                          "
+                          ><i
+                            class="fa fa-trash"
+                            style="color: red"
+                            onclick="delete_department('{{i.id}}')"
+                          ></i
+                        ></a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <input type="hidden" id="teacher_id" value="{{teacher_id}}" />
+                <input
+                  type="file"
+                  id="csv_file"
+                  onchange="save_csv_file_data()"
+                  accept=".csv"
+                  hidden
+                />
+              </div>
+            </div>
+          </div>
+          <!-- end col -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+
+<script>
+  
+
+  function delete_department(id){
+    console.log(id)
+    swal({
+      title: "Are you sure to Delete this?",
+      text: "",
+      icon: "warning",
+      buttons: ["No", "Yes"],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          method : "POST",
+          url : "/delete_department/",
+          data : {
+            'id':id
+            },
+          success : function(response){
+            if (response == "success"){
+              swal("Department deleted successfully", {
+              icon: "success",
+              button: "Ok",
+              closeOnClickOutside: false,
+              }).then(function() {
+                location.reload();
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  function save_department_model() {
+    var department = $("#department").val();
+    var discription = $("#discription").val();
+    var status = $("#status").val();
+    
+
+    if (department == "") {
+      $("#employee_id_error").show();
+    }	
+    else if (discription == "") {
+      $("#employee_name_error").show();
+    } 
+    else if (status == "") {
+      $("#email_error").show();
+    } 
+    
+     
+    else{
+        $.ajax({
+            method:"POST",
+            url: "/save_department/",
+            data : {
+                department,
+                discription,
+                status
+            },
+            success:function (response){
+                if (response == "success"){
+                    swal("Department Added", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function(){
+                        location.reload()
+                    })
+                }else{
+                    swal("Try again Later", {
+                    icon: "warning",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                    })
+                department.val()
+                discription.val()
+                status.val()
+                }
+            }   
+        })
+    }
+  }
+
+
+</script>
+{% include 'footer.html' %}

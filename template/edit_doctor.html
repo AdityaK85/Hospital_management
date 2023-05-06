@@ -1,0 +1,184 @@
+{% include 'header.html' %} {% load static %}
+
+<main class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+              <div class="col-12">
+                <div class="row">
+                    <div class="page-title-end col">
+                        <ol class="breadcrumb">
+                            <h2 class="fw-semibold display-8 mb-0">Doctor</h2>
+                        </ol>
+                    </div>
+                </div>
+              </div>                                    
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Doctor</h4>
+
+            <form id="form_data">
+
+                <div class="row mb-4">
+                    <label for="dr_name" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-5">
+                      <input type="text" value="{{id.dr_name}}" class="form-control" id="dr_name_d" placeholder="Enter Your Name">
+                    </div>
+                    <label for="dr_gender" class="col-sm-2 col-form-label">Gender</label>
+                    <div class="col-sm-3">
+                        <select name="dr_gender" value="{{id.dr_gender}}" class="form-control" id="dr_gender_d">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <label for="dr_email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-5">
+                      <input type="email" value="{{id.dr_email}}" class="form-control" id="dr_email_d" placeholder="Enter Your Email ">
+                    </div>
+                    <label for="dr_age" class="col-sm-2 col-form-label">Age</label>
+                    <div class="col-sm-3">
+                      <input type="text" value="{{id.dr_age}}" class="form-control" id="dr_age_d" placeholder="Enter Your Age ">
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <label for="dr_addr" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-5">
+                        <textarea class="form-control" cols="1" rows="1"  id="dr_addr_d" placeholder="Enter Your Address ">{{id.dr_addr}}</textarea>
+                    </div>
+                    <label for="dr_exprience" class="col-sm-2 col-form-label">Experie</label>
+                    <div class="col-sm-3">
+                        <select name="dr_exprience" class="form-control" id="dr_exprience_d">
+                            <option value="{{id.dr_exprience}}">{{id.dr_exprience}}</option>
+                            <option value="1yr">1yr</option>
+                            <option value="2yr">2yr</option>
+                            <option value="3yr">3yr</option>
+                            <option value="4yr">4yr</option>
+                            <option value="5yr">5yr</option>
+                            <option value="6yr">6yr</option>
+                            <option value="7yr">7yr</option>
+                            <option value="8yr">8yr</option>
+                            <option value="9yr">9yr</option>
+                            <option value="10yr">10yr</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <label for="dr_mobile" class="col-sm-2 col-form-label">Mobile</label>
+                    <div class="col-sm-5">
+                      <input type="number" value="{{id.dr_mobile}}" class="form-control" id="dr_mobile_d" placeholder="Enter Your Mobile ">
+                    </div>
+                    <label for="dr_depart" class="col-sm-2 col-form-label">Department</label>
+                    <div class="col-sm-3">
+                        <select name="" class="form-control" id="dr_depart_d">
+                            <option value="{{id.dr_depart}}" class="form-control">{{id.dr_depart}}</option>
+                            {% for i in obj %}
+                            <option value="{{i.department}}" class="form-control">{{i.department}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            
+                
+<input type="hidden" name="" id="id" value="{{id.id}}">
+                <div class="row justify-content-left">
+                    <div class="col-sm-2">
+                        <div>
+                            <button type="button" onclick="update_doctor()" class="btn btn-success w-md">Update Doctor</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- end card body -->
+    </div>
+    
+</main>
+
+<script>
+function update_doctor() {
+    var id = $('#id').val()
+    var dr_name = $("#dr_name_d").val();
+    var dr_email = $("#dr_email_d").val();
+    var dr_addr = $("#dr_addr_d").val();
+    var dr_mobile = $("#dr_mobile_d").val();
+    var dr_gender = $("#dr_gender_d").val();
+    var dr_age = $("#dr_age_d").val();
+    var dr_exprience = $("#dr_exprience_d").val();
+    var dr_depart = $("#dr_depart_d").val();
+
+    if (dr_name == "") {
+      $("#employee_id_error").show();
+    }	
+    else if (dr_email == "") {
+      $("#employee_name_error").show();
+    } 
+    else if (dr_addr == "") {
+      $("#email_error").show();
+    } 
+    else if (dr_mobile == "") {
+      $("#email_error").show();
+    } 
+    else if (dr_gender == "") {
+      $("#email_error").show();
+    } 
+    else if (dr_age == "") {
+      $("#email_error").show();
+    } 
+    else if (dr_exprience == "") {
+      $("#email_error").show();
+    } 
+    else if (dr_depart == "") {
+      $("#email_error").show();
+    }  
+    else{
+        $.ajax({
+            method:"POST",
+            url: "/update_doctor/",
+            data : {
+                id,
+                dr_name,
+                dr_email,
+                dr_addr,
+                dr_mobile,
+                dr_gender,
+                dr_age,
+                dr_exprience,
+                dr_depart
+            },
+            success:function (response){
+                if (response == "success"){
+                    swal("Docter has been Updated", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function(){
+                    location.href = '/manage_doctor'
+                })
+                }else{
+                    swal("Try again Later", {
+                    icon: "warning",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                    })
+                department.val()
+                discription.val()
+                status.val()
+                }
+            }   
+        })
+    }
+  }
+
+</script>
+
+{% include 'footer.html' %}

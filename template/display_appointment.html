@@ -1,0 +1,171 @@
+{% load static %}
+{% include 'header.html' %}
+<main class="content">
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                          <div class="col-12">
+                            <div class="row">
+                                <div class="page-title-end col">
+                                    <ol class="breadcrumb">
+                                        <h2 class="fw-semibold display-6 mb-0">Manage Appointment</h2>
+                                    </ol>
+                                </div>
+                                <div class="col-2">
+                                 
+                                  <button type="button" class="btn btn-primary" onclick="new_appointment_modal()">New Appointment</button>
+                                </div>
+                            </div>
+                          </div>                                    
+                        </div>
+                    </div>
+                </div>
+<br>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                                    <thead>
+                                    <tr>
+                                        <th>Sr.no</th>
+                                        <th>Department</th>
+                                        <th>Doctor</th>
+                                        <th>Patient Name</th>
+                                        <th>Appointment Date</th>
+                                        <th>Problem</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in obj %}
+                                  <tr>                                         
+                                    <td>0{{forloop.counter }}</td>
+                                    <td>{{i.fk_department.department }}</td>
+                                    <td>{{i.fk_doctor.dr_name }}</td>
+                                    <td>{{i.patient_name }}</td>
+                                    <td>{{i.appointment_date }}</td>
+                                    <td>{{i.problem }}</td>
+                      <td>
+                      <a class="btn btn-icon icon-left btn-primary btn-sm"style="background-color: transparent;outline: none;background-repeat: no-repeat; border: none;overflow: hidden;" href = "/edit_appointment/{{i.id}}"><i class='fas fa-edit' style='color: black'></i></a>
+                      <a class="btn btn-icon icon-left btn-danger btn-sm" style="background-color: transparent;outline: none;background-repeat: no-repeat; border: none;overflow: hidden;"><i class='fa fa-trash' style='color: red' onclick = "delete_appointment('{{i.id}}')" ></i></a>
+                                       
+                                   </td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                                </table>
+                                <input type="hidden" id="teacher_id" value="{{teacher_id}}">
+                                <input type="file" id="csv_file" onchange="save_csv_file_data()" accept=".csv" hidden/>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div>
+            </div> 
+        </div>
+    </div>
+</main>
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+<script>
+    function save_appointment_model() {
+      var patient_name = $("#patient_name").val();
+      var fk_doctor = $("#fk_doctor").val();
+      var fk_department = $("#fk_department").val();
+      var appointment_date = $("#appointment_date").val();
+      var problem = $("#problem").val();
+
+      console.log('department',fk_doctor)
+      console.log('department',fk_department)
+  
+      if (patient_name == "") {
+        $("#employee_id_error").show();
+      }	
+      else if (fk_department == "") {
+        $("#employee_name_error").show();
+      } 
+      else if (fk_doctor == "") {
+        $("#email_error").show();
+      } 
+      else if (appointment_date == "") {
+        $("#email_error").show();
+      } 
+      else if (problem == "") {
+        $("#email_error").show();
+      } 
+      else{
+          $.ajax({
+              method:"POST",
+              url: "/save_appointment/",
+              data : {
+                  patient_name,
+                  fk_department,
+                  fk_doctor,
+                  appointment_date,
+                  problem,
+              },
+              success:function (response){
+                  if (response == "success"){
+                      swal("Appoint  Added", {
+                      icon: "success",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                  })
+                  location.reload()
+                  }else{
+                      swal("Try again Later", {
+                      icon: "warning",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                      })
+                  department.val()
+                  discription.val()
+                  status.val()
+                  }
+              }   
+          })
+      }
+    }
+
+    function delete_appointment(id){
+    console.log(id)
+    swal({
+      title: "Are you sure to Delete this?",
+      text: "",
+      icon: "warning",
+      buttons: ["No", "Yes"],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          method : "POST",
+          url : "/delete_appointment/",
+          data : {
+            'id':id
+            },
+          success : function(response){
+            if (response == "success"){
+              swal("Appointment deleted successfully", {
+              icon: "success",
+              button: "Ok",
+              closeOnClickOutside: false,
+              }).then(function() {
+                location.reload();
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+
+
+</script>
+{% include 'footer.html' %}

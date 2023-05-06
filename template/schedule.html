@@ -1,0 +1,194 @@
+{% include 'header.html' %} {% load static %}
+
+<main class="content">
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <div class="col-12">
+            <div class="row">
+                <div class="page-title-end col">
+                    <ol class="breadcrumb">
+                        <h2 class="fw-semibold display-8 mb-0">New Schedule</h2>
+                    </ol>
+                </div>
+            </div>
+          </div>                                    
+        </div>
+    </div>
+</div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Active Schedule</h4>
+
+      <form>
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Department</label
+          >
+          <div class="col-sm-8">
+            <select name="fk_department" id="fk_department_j" class="form-control" id="">
+              {% for i in obj %}
+              <option value="{{i.id}}" class="form-control">{{i.department}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Doctor</label
+          >
+          <div class="col-sm-8">
+            <select name="fk_doctor_j" class="form-control" id="fk_doctor_j">
+              {% for i in obj1 %}
+              <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+            <label for="horizontal-firstname-input" class="col-sm-2 col-form-label">Available Days</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" id="available_days" placeholder="Enter Available Days">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="available_time" class="col-sm-2 col-form-label"
+            >Time</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="available_time"
+              placeholder="Start date"
+            ></input>
+          </div>
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="end_time"
+              placeholder="End date"
+            ></input>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+            <label for="per_patient_time" class="col-sm-2 col-form-label">Per Patient Time</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="per_patient_time" placeholder="Enter Patient Per Time ">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="horizontal-password-input" class="col-sm-2 col-form-label"
+            >Status</label
+          >
+          <div class="col-sm-8">
+            <select name="status" class="form-control" id="status">
+                <option value="Active" class="form-control">Active</option>
+                <option value="Inactive" class="form-control">Inactive</option>
+                <option value="None" class="form-control">None</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-sm-2">
+            <div>
+              <button type="button" onclick="save_schedule()" class="btn btn-success w-md">Add Schedule</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- end card body -->
+  </div>
+</main>
+
+<script>
+  function save_schedule() {
+      var fk_department = $("#fk_department_j").val();
+      var fk_doctor = $("#fk_doctor_j").val();
+      var available_days = $("#available_days").val();
+      var available_time = $("#available_time").val();
+      var end_time = $("#end_time").val();
+      var per_patient_time = $("#per_patient_time").val();
+      var status = $("#status").val();
+
+      console.log(fk_department)
+      console.log(fk_doctor)
+      console.log(status)
+      console.log(available_days)
+      console.log(available_time)
+      console.log(end_time)
+      console.log(per_patient_time)
+
+  
+      if (fk_department == "") {
+        $("#employee_id_error").show();
+      }	
+      else if (fk_doctor == "") {
+        $("#employee_name_error").show();
+      } 
+      else if (available_days == "") {
+        $("#email_error").show();
+      } 
+      else if (available_time == "") {
+        $("#email_error").show();
+      } 
+      else if (end_time == "") {
+        $("#email_error").show();
+      } 
+      else if (per_patient_time == "") {
+        $("#email_error").show();
+      } 
+      else if (status == "") {
+        $("#email_error").show();
+      }  
+      else{
+          $.ajax({
+              method:"POST",
+              url: "/save_schedule/",
+              data : {
+                fk_department,
+                fk_doctor,
+                available_days,
+                available_time,
+                end_time,
+                per_patient_time,
+                status
+              },
+              success:function (response){
+                  if (response == "success"){
+                      swal("Schedule has been set", {
+                      icon: "success",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                  })
+                  $('#form_data').reset()
+                  }else{
+                      swal("Try again Later", {
+                      icon: "warning",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                      })
+                  department.val()
+                  discription.val()
+                  status.val()
+                  }
+              }   
+          })
+      }
+    }
+  
+  </script>
+
+{% include 'footer.html' %}

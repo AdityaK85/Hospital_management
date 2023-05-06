@@ -1,0 +1,204 @@
+{% include 'header.html' %} {% load static %}
+
+<main class="content">
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <div class="col-12">
+            <div class="row">
+                <div class="page-title-end col">
+                    <ol class="breadcrumb">
+                        <h2 class="fw-semibold display-8 mb-0">New Schedule</h2>
+                    </ol>
+                </div>
+                <div class="col-4">
+                  <button type="button" onclick="document.getElementById('csv_file').click()" class="btn btn-success" >Import CSV<i class="bx bx-import"></i></button>
+                  <a href="/hospitaladmin/add_new_provider/" type="button" class="btn btn-warning">Add New Department</a>
+                </div>
+            </div>
+          </div>                                    
+        </div>
+    </div>
+</div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Active Schedule</h4>
+
+      <form>
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Department</label
+          >
+          <div class="col-sm-8">
+            <select name="fk_department" id="fk_department_s" class="form-control" >
+                <option value="{{id.fk_department_id}}" class="form-control">{{id.fk_department.department}}</option>
+              {% for i in obj1 %}
+              <option value="{{i.id}}" class="form-control">{{i.department}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label
+            for="horizontal-firstname-input"
+            class="col-sm-2 col-form-label"
+            >Doctor</label
+          >
+          <div class="col-sm-8">
+            <select name="fk_doctor" class="form-control" id="fk_doctor_s">
+                <option value="{{id.fk_doctor_id}}" class="form-control">{{id.fk_doctor.dr_name}}</option>
+              {% for i in obj %}
+              <option value="{{i.id}}" class="form-control">{{i.dr_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+            <label for="horizontal-firstname-input" class="col-sm-2 col-form-label">Available Days</label>
+            <div class="col-sm-8">
+              <input type="number" value="{{id.available_days}}"  class="form-control" id="available_days_s" placeholder="Enter Available Days">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="available_time" class="col-sm-2 col-form-label"
+            >Time</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="available_time_s"
+              value="{{id.available_time}}"
+              placeholder="Start date"
+            ></input>
+          </div>
+          <div class="col-sm-4">
+            <input
+              type="text"
+              class="form-control"
+              id="end_time_s"
+              value="{{id.end_time}}"
+              placeholder="End date"
+            ></input>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+            <label for="per_patient_time" class="col-sm-2 col-form-label">Per Patient Time</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" value="{{id.per_patient_time}}" id="per_patient_time_s" placeholder="Enter Patient Per Time ">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+          <label for="horizontal-password-input" class="col-sm-2 col-form-label"
+            >Status</label
+          >
+          <div class="col-sm-8">
+            <select name="status" class="form-control" id="status_s">
+                <option value="{{id.status}}" class="form-control">{{id.status}}</option>
+                <option value="Active" class="form-control">Active</option>
+                <option value="Inactive" class="form-control">Inactive</option>
+                <option value="None" class="form-control">None</option>
+              </select>
+          </div>
+        </div>
+
+        <input type="hidden" name="" id="id" value="{{id.id}}">
+
+        <div class="row justify-content-center">
+          <div class="col-sm-2">
+            <div>
+              <button type="button" onclick="update_schedule()" class="btn btn-success w-md">Add Schedule</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- end card body -->
+  </div>
+</main>
+
+<script>
+  function update_schedule() {
+    var id = $('#id').val()
+      var fk_department = $("#fk_department_s").val();
+      var fk_doctor = $("#fk_doctor_s").val();
+      var available_days = $("#available_days_s").val();
+      var available_time = $("#available_time_s").val();
+      var end_time = $("#end_time_s").val();
+      var per_patient_time = $("#per_patient_time_s").val();
+      var status = $("#status_s").val();
+
+      console.log(fk_department)
+      console.log(fk_doctor)
+      console.log(status)
+
+  
+      if (fk_department == "") {
+        $("#employee_id_error").show();
+      }	
+      else if (fk_doctor == "") {
+        $("#employee_name_error").show();
+      } 
+      else if (available_days == "") {
+        $("#email_error").show();
+      } 
+      else if (available_time == "") {
+        $("#email_error").show();
+      } 
+      else if (end_time == "") {
+        $("#email_error").show();
+      } 
+      else if (per_patient_time == "") {
+        $("#email_error").show();
+      } 
+      else if (status == "") {
+        $("#email_error").show();
+      }  
+      else{
+          $.ajax({
+              method:"POST",
+              url: "/update_schedule/",
+              data : {
+                id,
+                fk_department,
+                fk_doctor,
+                available_days,
+                available_time,
+                end_time,
+                per_patient_time,
+                status
+              },
+              success:function (response){
+                  if (response == "success"){
+                      swal("Schedule has been update", {
+                      icon: "success",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                  }).then(function(){
+                    location.href = "/display_schedule"
+                  })
+                  }else{
+                      swal("Try again Later", {
+                      icon: "warning",
+                      button: "Ok",
+                      closeOnClickOutside: false,
+                      })
+                  department.val()
+                  discription.val()
+                  status.val()
+                  }
+              }   
+          })
+      }
+    }
+  
+  </script>
+
+{% include 'footer.html' %}

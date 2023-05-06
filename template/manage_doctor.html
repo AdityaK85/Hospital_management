@@ -1,0 +1,188 @@
+{% load static %}
+{% include 'header.html' %}
+<main class="content">
+    <div class="main-content">
+
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                          <div class="col-12">
+                            <div class="row">
+                                <div class="page-title-end col">
+                                    <ol class="breadcrumb">
+                                        <h2 class="fw-semibold display-6 mb-0">Manage Doctors</h2>
+                                    </ol>
+                                </div>
+                                <div class="col-2">
+                                  <button type="button" onclick="new_doctor_modal()" class="btn btn-primary" >New Doctor</button>
+                                </div>
+                            </div>
+                          </div>                                    
+                        </div>
+                    </div>
+                </div>
+<br>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                                    <thead>
+                                    <tr>
+                                        <!-- <th>Sr.no</th> -->
+                                        <th>Department</th>
+                                        <th> Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Gender</th>
+                                        <th>Age</th>
+                                        <th>Experience</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in obj %}
+                                  <tr>                                         
+                                    <!-- <td>{{forloop.counter }}1</td> -->
+                                    <td>{{i.dr_depart }}</td>       
+                                    <td>{{i.dr_name }}</td>
+                                    <td>{{i.dr_email }}</td>
+                                    <td>{{i.dr_mobile }}</td>
+                                    <td>{{i.dr_gender }}</td>
+                                    <td>{{i.dr_age }}</td>
+                                    <td>{{i.dr_exprience }}</td>       
+                      <td>
+                      <a class="btn btn-icon icon-left btn-primary btn-sm"style="background-color: transparent;outline: none;background-repeat: no-repeat; border: none;overflow: hidden;" href = "/edit_doctor/{{i.id}}"><i class='fas fa-edit' style='color: black'></i></a>
+                      <a class="btn btn-icon icon-left btn-danger btn-sm" style="background-color: transparent;outline: none;background-repeat: no-repeat; border: none;overflow: hidden;"><i class='fa fa-trash' style='color: red' onclick = "delete_doctor('{{i.id}}')" ></i></a>
+                                       
+                                   </td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                                </table>
+                                <input type="hidden" id="teacher_id" value="{{teacher_id}}">
+                                <input type="file" id="csv_file" onchange="save_csv_file_data()" accept=".csv" hidden/>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div>
+            </div> 
+        </div>
+    </div>
+</main>
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+
+<script>
+    function save_doctor_model() {
+        var dr_name = $("#dr_name").val();
+        var dr_email = $("#dr_email").val();
+        var dr_addr = $("#dr_addr").val();
+        var dr_mobile = $("#dr_mobile").val();
+        var dr_gender = $("#dr_gender").val();
+        var dr_age = $("#dr_age").val();
+        var dr_exprience = $("#dr_exprience").val();
+        var dr_depart = $("#dr_depart").val();
+    
+        if (dr_name == "") {
+          $("#employee_id_error").show();
+        }	
+        else if (dr_email == "") {
+          $("#employee_name_error").show();
+        } 
+        else if (dr_addr == "") {
+          $("#email_error").show();
+        } 
+        else if (dr_mobile == "") {
+          $("#email_error").show();
+        } 
+        else if (dr_gender == "") {
+          $("#email_error").show();
+        } 
+        else if (dr_age == "") {
+          $("#email_error").show();
+        } 
+        else if (dr_exprience == "") {
+          $("#email_error").show();
+        } 
+        else if (dr_depart == "") {
+          $("#email_error").show();
+        }  
+        else{
+            $.ajax({
+                method:"POST",
+                url: "/save_doctor/",
+                data : {
+                    dr_name,
+                    dr_email,
+                    dr_addr,
+                    dr_mobile,
+                    dr_gender,
+                    dr_age,
+                    dr_exprience,
+                    dr_depart
+                },
+                success:function (response){
+                    if (response == "success"){
+                        swal("Docter has been Added", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function(){
+                        location.reload()
+                    })
+                    }else{
+                        swal("Try again Later", {
+                        icon: "warning",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                        })
+                    department.val()
+                    discription.val()
+                    status.val()
+                    }
+                }   
+            })
+        }
+      }
+
+
+      function delete_doctor(id){
+    console.log(id)
+    swal({
+      title: "Are you sure to Delete this?",
+      text: "",
+      icon: "warning",
+      buttons: ["No", "Yes"],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          method : "POST",
+          url : "/delete_doctor/",
+          data : {
+            'id':id
+            },
+          success : function(response){
+            if (response == "success"){
+              swal("Doctors Details deleted successfully", {
+              icon: "success",
+              button: "Ok",
+              closeOnClickOutside: false,
+              }).then(function() {
+                location.reload();
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+    
+    </script>
+{% include 'footer.html' %}
